@@ -1,9 +1,17 @@
 ######## Exploring the data #############
 
-library(package="foreign") #needed for read.dta function
+if (!"foreign" %in% installed.packages())
+{
+  install.packages("foreign", dependencies = TRUE)
+}
+library("foreign") #needed for read.dta function
 
 ### Import Stata Data ###
-data <- read.dta("Week1/fhs.2d92301d751b.dta")
+data <- read.dta("Data/fhs.dta",convert.factors = TRUE ,missing.type = TRUE)
+
+
+### Attach the Data dataframe ###
+attach(data)
 
 ### Order data alphabetically ###
 data <- data[order(colnames(data))]
@@ -16,29 +24,72 @@ names(data)
 head(data)
 
 ### Summarize variables ###
+summary(sysbp1)
+
 #Brute force
-mean(data$sysbp1)
-sd(data$sysbp1)
-range(data$sysbp1)
-length(data$sysbp1)
-length(na.omit(data$sysbp1))
-quantile(data$sysbp1)
+mean(sysbp1)
+sd(sysbp1)
+range(sysbp1)
+length(sysbp1)
+length(na.omit(sysbp1))
+quantile(sysbp1)
 
 #Using an external package
-library(package="Hmisc")
-describe(data$sysbp1)   # describe is similar to summarize in Stata
-describe(data$glucose1)
+
+if (!"Hmisc" %in% installed.packages())
+{
+  install.packages("Hmisc", dependencies = TRUE)
+}
+library("Hmisc")
+describe(sysbp1)   # describe is similar to summarize in Stata
+describe(glucose1)
 
 ### Create subset ###
-glucose1_women <- subset(data, sex1 == "Female", c(sex1, glucose1))
-diabetes1_women <- subset(data, sex1 == "Female", c(sex1, diabetes1))
+glucose1.Female <- glucose1[sex1=="Female"] # or data$glucose1[data$sex1=="Female"]
+diabetes1.female <- diabetes1[sex1=="Female"]
 
+#glucose1_women <- subset(data, sex1 == "Female", c(sex1, glucose1))
+#diabetes1_women <- subset(data, sex1 == "Female", c(sex1, diabetes1))
+
+
+"0-39", "40-49", "50-59", "60-70"
+age1[age1 <= 39]
+age1[age1 >= 50 & age1 < 60]
+age1[age1 >= 60 & age1 <= 70]
+
+agecat1 <- c(rep(NA, length(age1)))
+
+for (i in 1:length(age1))
+{
+  if (age1[i] <= 39)
+  {
+    agecat1[i] <- "0-39"
+  }
+  else if (age1[i] >= 40 & age1[i] < 50)
+  {
+    agecat1[i] <- "40-49"
+  }
+  else if (age1[i] >= 50 & age1[i] < 60)
+  {
+    agecat1[i] <- "50-59"
+  }
+  else if (age1[i] >= 60 & age1[i] <= 70)
+  {
+    agecat1[i] <- "60-70"
+  }
+}
+
+agecat1.tbl <- table(agecat1)
+agecat1.tbl
+prop.table(agecat1.tbl)
+cumsum(agecat1.tbl)
+cumsum(agecat1.tbl)/margin.table(agecat1.tbl)
 ########Cleaning data#############
 
-# Create new variable (squaring age1 variable to data$agesq1)
-data$agesq1 <- data$age1^2
+# Create new variable (squaring age1 variable to agesq1)
+agesq1 <- age1^2
 # Describing the new variables
-describe(subset(data, select = c(age1, agesq1)))
+describe(data.frame(age1, agesq1))
 
 # Creating Variable labels (Using Hmisc package)
 attributes(data)$var.labels <- NA
@@ -58,7 +109,7 @@ data$agecat1 <- cut(x=data$age1, breaks=c(0,40,50,60,100), labels=FALSE, right=F
 View(data[sample(1:nrow(data), 50), c('agecat1', 'age1')])
 
 # View tabulate (as in Stata)
-mytable <- table(data$agecat1)          # Frequency table
+mytable <- table(agecat1)          # Frequency table
 mytable
 prop.table(mytable)                     # Frequency proportions
 cumsum(mytable)                         # Cummulative Frequency
