@@ -51,33 +51,29 @@ diabetes1.female <- diabetes1[sex1=="Female"]
 #glucose1_women <- subset(data, sex1 == "Female", c(sex1, glucose1))
 #diabetes1_women <- subset(data, sex1 == "Female", c(sex1, diabetes1))
 
-
-"0-39", "40-49", "50-59", "60-70"
-age1[age1 <= 39]
-age1[age1 >= 50 & age1 < 60]
-age1[age1 >= 60 & age1 <= 70]
-
 agecat1 <- c(rep(NA, length(age1)))
 
 for (i in 1:length(age1))
 {
   if (age1[i] <= 39)
   {
-    agecat1[i] <- "0-39"
+    agecat1[i] <- 1
   }
   else if (age1[i] >= 40 & age1[i] < 50)
   {
-    agecat1[i] <- "40-49"
+    agecat1[i] <- 2
   }
   else if (age1[i] >= 50 & age1[i] < 60)
   {
-    agecat1[i] <- "50-59"
+    agecat1[i] <- 3
   }
   else if (age1[i] >= 60 & age1[i] <= 70)
   {
-    agecat1[i] <- "60-70"
+    agecat1[i] <- 4
   }
 }
+
+agecat1 <- factor(agecat1, labels = c("30-39", "40-49", "50-59", "60-70"))
 
 agecat1.tbl <- table(agecat1)
 agecat1.tbl
@@ -95,8 +91,7 @@ describe(data.frame(age1, agesq1))
 attributes(data)$var.labels <- NA
 
 attributes(data)$var.labels[
-  which(attributes(data)$names == "agecat1")] 
-<- "Age Categories"
+  which(attributes(data)$names == "agecat1")]  <- "Age Categories"
 
 # Create age groups using the cut function
 # It takes a numerix vector (x) and cuts it based on the specified breaks.
@@ -120,13 +115,62 @@ data$agecat1 <- factor(data$agecat1,
                        levels = c(1,2,3,4),
                        labels = c("0-39", "40-49", "50-59", "60-100"))
 
-# Graphing
+########  Graphing  ######## 
 
-# Boxplot
-# 2 boxplots
+### Boxplots ###
+# Make a Boxplot of total cholesterol at visit 1
+boxplot(data$totchol1)
 
-# Histogram
-# 2 histograms
+# Split totchol1 data into 2 boxplots based on sex 
+boxplot(data$totchol1 ~ data$sex1)
 
-# Scatterplot
+### Histograms ###
+# Make a histogram of totchol1
+hist(data$totchol1)
+
+# Make a histogram of total choesterol for females with prevalent CHD
+hist(data[data$sex1 == "Female" & data$prevchd1 == "Yes", "totchol1"])
+
+# Splitting histograms is a bit trikier in R. There are few options
+# Option 1 - plot histograms in the same window, but on separate and not necessarily
+# identical axes
+par(mfrow = c(1,2)) # Allows 2 plots to be arranged horisontally in the same window
+hist(data[data$sex1 == "Female", "totchol1"])
+hist(data[data$sex1 == "Male", "totchol1"])
+par(mfrow = c(1,1)) # Reset plotting window
+
+# Option 2 - install NCStats package, which allows using formula in histogram, 
+# much like boxplot above
+# NCStats is likely to require a few dependencies, which you can install manually using
+# install.packages
+if (!"NCStats" %in% installed.packages())
+{
+  source("http://www.rforge.net/NCStats/InstallNCStats.R")
+}
+
+library(NCStats)
+# Plot Histograms separated by Level
+hist(data$totchol1~data$sex1)
+
+# Option 3 - we can plot both histograms on the same axes, using different colours for levels
+hist(data[data$sex1 == "Female", "totchol1"], col = "blue")
+hist(data[data$sex1 == "Male", "totchol1"], add = TRUE, col = "red")
+
+### Scatterplot ###
+# Make a scatter plot with bmi1 on the x-axis and totchol1 on the y-axis
+plot(data$bmi1, data$totchol1)
+
+# Plot bmi1 vs totchol for Females
+plot(data[data$sex1 == "Female", "bmi1"], data[data$sex1 == "Female", "totchol1"])
+
 # 2 scatterplots
+# Plot bmi1 vs totchol for Males and Females on the same graph using different colours
+plot(data[data$sex1 == "Female", "bmi1"], data[data$sex1 == "Female", "totchol1"], col = "blue")
+points(data[data$sex1 == "Male", "bmi1"], data[data$sex1 == "Male", "totchol1"], col = "red")
+
+# Plot bmi1 vs totchol for Males and Females on two separate graphs
+par(mfrow = c(1,2)) # Allows 2 plots to be arranged horisontally in the same window
+plot(data[data$sex1 == "Female", "bmi1"], data[data$sex1 == "Female", "totchol1"])
+plot(data[data$sex1 == "Male", "bmi1"], data[data$sex1 == "Male", "totchol1"])
+par(mfrow = c(1,1)) # Reset plotting window
+
