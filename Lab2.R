@@ -31,7 +31,7 @@ stat.table(factor(cursmoke3, exclude=NULL), contents =
 
 #gen cursmokenotmiss = cursmoke1<. & cursmoke2<. & cursmoke3<.
 
-cursmokenotmiss <- na.omit(data.frame(cursmoke1, cursmoke2, cursmoke3)
+cursmokenotmiss <- na.omit(data.frame(cursmoke1, cursmoke2, cursmoke3))
 
 #tab1 cursmoke1 cursmoke2 cursmoke3 if cursmokenotmiss==1, missing
 
@@ -41,7 +41,7 @@ stat.table(cursmoke2, contents = list(N=count(), '(%)'=percent(cursmoke2)), data
                            
 stat.table(cursmoke3, contents = list(N=count(), '(%)'=percent(cursmoke3)), data=cursmokenotmiss, margin = T)
                            
-
+with(data, CrossTable(cursmoke1, cursmoke2, missing.include=TRUE, format="SPSS"))
 
                              
 stat.table(list(cursmoke1,cursmoke2), data=data, margin=T))
@@ -124,3 +124,29 @@ cursmoke1_Vs_cursmoke2 <- round(as.data.frame(cursmoke1_Vs_cursmoke2),2)
 names(cursmoke1_Vs_cursmoke2) <- c("No", "Yes", "NA", "Total")
 
 cursmoke1_Vs_cursmoke2
+
+
+
+#gen packs1=.
+#replace packs1=0 if (cigpday1==0) 
+#replace packs1=1 if (cigpday1>=1 & cigpday1 <= 20)
+#replace packs1=2 if (cigpday1>=21 & cigpday1 <= 40)
+#replace packs1=3 if (cigpday1>=41 & cigpday1<.)
+        
+data$packs1 <- NA # initialize packs1
+data$packs1 [data$cigpday1==0] <- 0
+data$packs1 [data$cigpday1>=1 & data$cigpday1 <= 20] <- 1
+data$packs1 [data$cigpday1>=21 & data$cigpday1 <= 40] <- 2
+data$packs1 [data$cigpday1>=41 & !is.na(data$cigpday1)] <- 3
+
+with(data, CrossTable(packs1, prevchd1, format="SPSS"))
+
+
+if (!"epicalc" %in% installed.packages())
+{
+  install.packages("epicalc", dependencies = TRUE)
+}
+library("epicalc")
+tab1(cursmoke1, graph=F)
+tab1(cursmoke2, graph=F)
+tab1(cursmoke3, graph=F)

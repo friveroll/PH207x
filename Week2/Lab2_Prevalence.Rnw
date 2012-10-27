@@ -1,0 +1,186 @@
+\documentclass{article}
+\begin{document}
+\title{R Demo on Prevalence}
+\author{Elizabeth Mostofsky\footnote{STATA tutorial}
+    \and Felipe Riveroll Aguirre\thanks{R Version \texttt{friveroll@gmail.com}}} 
+\maketitle
+
+\SweaveOpts{concordance=TRUE}
+
+\section{Part I}
+
+<<echo=FALSE>>=
+library("foreign") #needed for read.dta function
+### Import Data from STATA ###
+data <- read.dta("C:\\Users\\felipillo\\Documents\\GitHub\\PH207x\\Data\\fhs.dta",convert.factors = TRUE ,missing.type = TRUE)
+attach(data)
+library("epicalc")
+library("gmodels")
+@
+
+\begin{enumerate}
+\item Objectives
+\begin{enumerate}
+\item Calculate the prevalence of smoking in the Framingham Data Set and interpret the results
+\item Restrict an analysis to non-missing data
+\item Create a 2 way table to examine changes in self-reported smoking status between visit 1 and visit 2
+\end{enumerate}
+\item Calculate the proportion of people at each visit that report current smoking (NA+) and the proportion of people at each visit that report current smoking among 
+those with data on smoking status at that visit (NA-).   
+\\In this data set, current smoking status us coded as ``0 = not current smoker, 1= current smoker''
+\begin{enumerate}
+\item Install the required package \texttt{Foreign} to read the dataset
+<<echo=True, eval=FALSE>>=
+install.packages("foreign", dependencies = TRUE)
+@
+\item Load the library \texttt{Foreign}
+<<echo=True, eval=FALSE>>=
+library("foreign")
+@
+\item Load and attach the dataset in a dataframe named data.
+<<echo=True, eval=FALSE>>=
+data <- read.dta("C:\\Users\\felipillo\\
+                 Documents\\GitHub\\PH207x
+                 \\Data\\fhs.dta",
+                 convert.factors = TRUE ,
+                 missing.type = TRUE)
+
+attach(data)
+@
+\item Install and load the package epicalc
+<<echo=TRUE, eval=FALSE>>=
+install.packages("epicalc", dependencies = TRUE)
+library("epicalc")
+@
+\item Use \texttt{tab1} from \texttt{epicalc} to get one-way tabulation to get the frequency table for cursmoke 1,2 and 3.\\
+
+<<>>=
+tab1(cursmoke1, graph=F, cum.percent = any(is.na(cursmoke1)))
+tab1(cursmoke2, graph=F, cum.percent = any(is.na(cursmoke2)))
+tab1(cursmoke3, graph=F, cum.percent = any(is.na(cursmoke3)))
+@
+NA+ proportion of people with missing data\\
+NA- proportion of people among those with data
+\end{enumerate}
+\pagebreak
+\item Calculate the proportion of people at each visit that report current smoking among those with data on smoking status at all 3 visits.
+\begin{enumerate}
+  \item We can create a dataframe excluding those with missing data (NA's)
+<<>>=
+cursmokenotmiss <- na.exclude(data.frame(cursmoke1, cursmoke2, cursmoke3))
+@
+  \item Use \texttt{tab1} to get the proportions from the new dataframe cursmokenotmiss
+<<>>=
+tab1(cursmokenotmiss$cursmoke1, graph=F)
+tab1(cursmokenotmiss$cursmoke2, graph=F)
+tab1(cursmokenotmiss$cursmoke3, graph=F)
+@
+
+\end{enumerate}
+
+\item What could explain the declining prevalence of smoking? 
+\begin{enumerate}
+  \item Over time, the prevalence of smoking is declining in the population
+  \item Current smokers have a shorter life
+  \item Several smokers choose not to participate in the 2nd and 3rd visits
+\end{enumerate}
+
+\item Calculate the change in smoking prevalence between the 1st and 2nd visit.
+\begin{enumerate}
+  \item Install and load the package \texttt{gmodels}
+<<echo=TRUE, eval=FALSE>>=
+install.packages("gmodels", dependencies = TRUE)
+library("gmodels")
+@
+\pagebreak
+\item Use the command with to generate a 2 way frequency table with \texttt{CrossTable} from package \texttt{gmodels}, including missing values.
+<<>>=
+with(data, CrossTable(cursmoke1, 
+                      cursmoke2, 
+                      missing.include=TRUE, 
+                      format="SPSS"))
+
+@
+
+\end{enumerate}
+\pagebreak
+\item Calculate the change in smoking prevalence between the 1st and 2 nd visit among  those with data on smoking status at both visits.
+<<>>=
+with(data, CrossTable(cursmoke1, 
+                      cursmoke2, 
+                      format="SPSS"))
+@
+\item Conclusions
+\begin{enumerate}
+  \item Smoking prevalence declined over time
+  \begin{enumerate}
+  \item Smokers are quitting
+  \item Smokers have a shorter life
+  \item Smokers are less likely to participate
+\end{enumerate}
+\item R can be used to
+\begin{enumerate}
+  \item Restrict an analysis to non-missing data
+  \item Create a 2 way table to cross-classify two nominal variables
+\end{enumerate}
+
+\end{enumerate}
+
+\end{enumerate}
+\pagebreak
+\section{Part II}
+\begin{enumerate}
+  \item Objectives
+  \begin{enumerate}
+  \item Create an ordinal variable from continuous data 
+  \item Calculate the prevalence of CHD for different levels of smoking at visit 1
+\end{enumerate}
+\item Calculate the prevalence of coronary heart disease (CHD) at visit 1 by categories of cigarettes per day\\
+\\ ``PREVCHD is defined as pre-existing angina pectoris, myocardial infarction (hospitalized, silent or unrecognized), or coronary insufficiency (unstable angina) 0 = Free of disease, 1 = Prevalent disease''
+\begin{enumerate}
+  \item Create 4 categories of cigarette packs per day ( 0 , 1-20 , 21-40, \geq 41 ).
+  \\ Since the values reflect, a particular ordering, it is an ordinal variable.
+
+<<>>=
+data$packs1 <- NA # initialize packs1
+data$packs1 [data$cigpday1==0] <- 0
+data$packs1 [data$cigpday1>=1 & data$cigpday1 <= 20] <- 1
+data$packs1 [data$cigpday1>=21 & data$cigpday1 <= 40] <- 2
+data$packs1 [data$cigpday1>=41 & !is.na(data$cigpday1)] <- 3
+@
+\pagebreak
+\item Use CrossTable to get a 2 way table from packs1 and prevchd1
+<<>>=
+with(data, CrossTable(packs1, prevchd1, format="SPSS"))
+@
+
+\end{enumerate}
+\pagebreak
+\item What could explain the higher prevalence of CHD among non-smokers compared to 
+those who smoke 1 or more cigarettes per day?
+\begin{enumerate}
+  \item High incidence, Long duration
+  \item Cross-sectional data is susceptible to reverse causation
+  \item Other common suspects
+  \begin{enumerate}
+  \item Bias
+  \item Confounding 
+  \item Chance
+\end{enumerate}
+
+\end{enumerate}
+
+\item Conclusions
+\begin{enumerate}
+  \item R can be used to create an ordinal variable based on continuous data. 
+  \item CHD prevalence was lower among people with higher levels of smoking.
+  \item Prevalence is a function of incidence and duration. 
+  \item In addition to a causal effect of exposure on disease risk, there are several 
+alternative explanations for observing an association between two factors of interest.
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}
+
