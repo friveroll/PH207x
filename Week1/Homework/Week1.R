@@ -4,7 +4,7 @@
 #month in the period January 1991 to December 1992.                #
 ####################################################################
 
-hospitalizations <- read.csv("~/GitHub/PH207x/Data/hospitalizations.csv")
+hospitalizations <- read.csv("https://dl.dropbox.com/u/4828275/hospitalizations.csv")
 
 # 1. In the year 1991, what is the relative frequency of 
 # hospitalizations in September?
@@ -44,7 +44,6 @@ if (sep1991.rf > sep1992.rf)
 #                                              #
 ################################################
 
-
 rfrq1991 <- rep(NA, nrow(hospitalizations))
 rfrq1992 <- rep(NA, nrow(hospitalizations))
 tfrq1991 <- rep(NA, nrow(hospitalizations))
@@ -62,8 +61,8 @@ for (i in 1:nrow(hospitalizations))
 
 data.frame(rfrq1991, rfrq1992, tfrq1991, tfrq1992, 
            row.names=c("Jan", "Feb", "Mar", "Apr",
-                     "May", "Jun", "Jul", "Aug",
-                     "Sep", "Oct", "Nov", "Dec"))
+                       "May", "Jun", "Jul", "Aug",
+                       "Sep", "Oct", "Nov", "Dec"))
 
 ##################################################################
 # We will use the Framingham dataset to explore data types,      #
@@ -77,7 +76,7 @@ if (!"foreign" %in% installed.packages())
 }
 library("foreign") 
 
-data <- read.dta("~/GitHub/PH207x/Data/fhs.dta")
+data <- read.dta("https://dl.dropbox.com/u/4828275/fhs.dta")
 
 attach(data)
 
@@ -121,19 +120,25 @@ barplot(table(prevhyp1, sex1)[c(2,4)],
 ## BODY MASS INDEX ##
 #####################
 
-
 ## Again using the Framingham dataset, we examine the continuous 
 ## variable, body mass index (BMI).
 
 ## 1. To quickly examine the interquartile range for BMI at 
 ## exam 1 in the study population, which graph would you use?
 
-boxplot(bmi1~sex1, xlab="Sex", ylab="BMI", main="Body Mass Index at exam 1")
+boxplot(bmi1~sex1, xlab="Sex", ylab="BMI", main="Body Mass Index at exam 1", col=c("darkblue","red"))
 
 ## 2. We say an individual has high BMI at exam 1 if his BMI is greater than 25.
 ## How many individuals in the dataset have high BMI at exam 1?
 
 length(na.omit(bmi1[bmi1>25]))/length(na.omit(bmi1))
+
+## Out of the 4,415 participants with a BMI measurement at exam 1. What percent 
+## had high BMI at exam 1) (an individual has high BMI at exam 1 if his BMI is 
+## greater than 25) Express your answer as a proportion of the whole 
+## (e.g. 10\% would be .10).
+
+high_bmi1/length(na.omit(bmi1))
 
 ## 4. Make a scatter plot of BMI at exam 1 (bmi1) versus BMI at exam 2 (bmi2). 
 ## In general, higher BMI at exam 1 is associated with a _________ BMI at exam 2.
@@ -165,7 +170,6 @@ subset(bmi1_by_sex1[,2], bmi1_by_sex1[,2]==max(bmi1_by_sex1[,2]))
 
 IQR(bmi1[sex1=="Female"], na.rm=T) > IQR(bmi1[sex1=="Male"], na.rm=T)
 
-
 ## Now, for the remaining parts of this question, restrict your study 
 ## population to the subset of participants with BMI measures at 
 ## exam 1 and exam 2.
@@ -190,5 +194,3 @@ max(bmi_delta_12) - min(bmi_delta_12)
 
 c(mean(bmi_delta_12)-2*sd(bmi_delta_12), 
   mean(bmi_delta_12)+2*sd(bmi_delta_12))
-
-

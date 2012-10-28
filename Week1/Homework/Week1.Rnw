@@ -1,0 +1,267 @@
+%
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+
+\title{Problem Set 1}
+\author{\href{http://feliperiveroll.name}{Felipe Riveroll Aguirre}\footnote{\texttt{friveroll@gmail.com}}} 
+\maketitle
+
+\textbf{Types of Data.} Decide if the following are examples of discrete or continuous data
+
+\begin{enumerate}
+  \item The number of deaths in the United States in a specific year\\
+\textbf{a) Discrete}, b) Continuous\\ 
+  \item The concentration of chlorine in a sample of water\\
+a) Discrete, \textbf{b) Continuous}\\ 
+  \item The length of time to recovery after a heart attack\\
+a) Discrete, \textbf{b) Continuous}\\ 
+  \item The number of adults hospitalized for respiratory disease during the summer of 2009 in Beijing\\
+\textbf{a) Discrete}, b) Continuous \\
+\end{enumerate}
+
+\pagebreak
+
+\textbf{Frequency.} In this question, we examine the reported numbers of hospitalizations for cardiac events in the United States for each month in the period January 1991 to December 1992.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{cccc}
+  \hline
+Month 1991 & Number 1991 & Month 1992 & Number 1992 \\ 
+  \hline
+January & 325 & January & 317 \\ 
+February & 312 & February & 302 \\ 
+March & 346 & March & 339 \\ 
+April & 340 & April & 328 \\ 
+May & 355 &   May & 361 \\ 
+June & 342 &   June & 333 \\ 
+July & 358 &   July & 341 \\ 
+August & 346 &   August & 343 \\ 
+September & 365 &   September & 359 \\ 
+October & 355 &  October & 305 \\ 
+November & 324 &  November & 312 \\ 
+December & 342 &  December & 321 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+<<echo=FALSE, eval=T>>=
+hospitalizations <- read.csv("~/GitHub/PH207x/Data/hospitalizations.csv")
+@
+
+<<eval=FALSE>>=
+hospitalizations <- 
+  read.csv("https://dl.dropbox.com/u/4828275/hospitalizations.csv")
+@
+
+\begin{enumerate}
+  \item In the year 1991, what is the relative frequency of hospitalizations in September?
+<<>>=
+sep1991.rf <- hospitalizations[9,2]/sum(hospitalizations[2])
+print(sep1991.rf)
+@
+
+  \item Is the absolute frequency of hospitalizations in September 1991 greater than the absolute frequency of hospitalizations in September 1992?
+
+<<>>=
+sep1991.af <- hospitalizations[9,2]/
+  (sum(hospitalizations[2])+ sum(hospitalizations[4]))
+sep1992.af <- hospitalizations[9,4]/
+  (sum(hospitalizations[2])+ sum(hospitalizations[4]))
+
+sep1991.af > sep1992.af
+@
+\pagebreak
+  \item Restricting to the year 1992, calculate the relative frequency of hospitalizations in September.  Comparing this estimate with the relative frequency calculation in part (a), is the relative frequency of hospitalizations in September higher in 1991 or in 1992?
+  
+  
+<<>>=
+sep1992.rf <- hospitalizations[9,4]/sum(hospitalizations[4])
+
+if (sep1991.rf < sep1992.rf)
+{
+  print("1992")
+}
+if (sep1991.rf > sep1992.rf)
+{
+  print("1991")
+}
+@
+
+
+\end{enumerate}
+\pagebreak
+
+\textbf{Prevalent hypertension}. In this question, we use data from the NHLBI teaching data set.  Our study population is the 4,434 participants in the Framingham Heart Study attending the first examination in 1956.   Using the Framingham dataset, we explore data types, tables, and graphs in this question.  We will examine the indicator of prevalent hypertension at exam 1 in 1956 (variable name: prevhyp1).  
+<<echo=FALSE>>=
+library("foreign") 
+data <- read.dta("~/GitHub/PH207x/Data/fhs.dta")
+attach(data)
+@
+<<eval=FALSE>>=
+if (!"foreign" %in% installed.packages())
+{
+  install.packages("foreign", dependencies = TRUE)
+}
+library("foreign") 
+data <- read.dta("https://dl.dropbox.com/u/4828275/fhs.dta")
+attach(data)
+@
+
+\begin{enumerate}
+  \item Prevalent hypertension at exam 1 is an example of what type of data?\\
+(a) nominal, (b) binary, \textbf{(c) both a and b}
+  \item How many individuals in the study population had prevalent hypertension at exam 1?
+  
+<<>>=
+summary(prevhyp1)[2]
+@
+
+  \item What is the relative frequency of prevalent hypertension at exam 1?
+
+<<>>=
+as.vector(summary(prevhyp1)[2])/length(prevhyp1)
+@
+
+
+\item Among the individuals with prevalent hypertension at exam 1, how many are female?
+
+<<>>=
+prevhyp1_fem <- length(prevhyp1[prevhyp1 == "Yes" & sex1 == "Female"])
+print(prevhyp1_fem)
+@
+\pagebreak
+  \item What proportion of individuals with prevalent hypertension at exam 1 are female? Express your answer as a proportion of the whole (e.g. 10\% would be .10).
+
+<<>>=
+by(prevhyp1, sex1, summary)
+prevhyp1_fem/length(prevhyp1[prevhyp1 == "Yes"])
+@
+
+
+\item Which graph would you use to summarize the distribution of the indicator for prevalent hypertension at exam 1 in the study population?\\
+(a) scatter plot, (b) histogram, \textbf{(c) bar chart}
+
+<<barchart, echo=TRUE, fig=TRUE, height=6, width=8>>=
+barplot(table(prevhyp1, sex1)[c(2,4)], 
+        col=c("darkblue","red"), 
+        ylim=c(0,800), 
+        names.arg=c("Male", "Female"), 
+        xlab="Sex", 
+        ylab="Prevalent hypertension at exam 1")
+@
+\end{enumerate}
+\pagebreak
+
+\textbf{BMI at baseline.} In this question, we again use data from the NHLBI teaching data set to examine the continuous variable, body mass index (BMI). Our study population is the subset of participants in the Framingham Heart Study attending the first examination in 1956 with a nonmissing BMI measure (4,415 participants out of 4,434).  
+
+\begin{enumerate}
+  \item To quickly examine the interquartile range for BMI at exam 1 in the study population, which graph would you use?\\
+(a) histogram, \textbf{(b) boxplot}, (c) scatter plot
+
+<<boxplot, echo=TRUE, fig=TRUE, height=6, width=8>>=
+boxplot(bmi1~sex1, 
+        xlab="Sex", 
+        ylab="BMI", 
+        main="Body Mass Index at exam 1", 
+        col=c("darkblue","red"))
+@
+
+\item We say an individual has high BMI at exam 1 if his BMI is greater than 25.  How many individuals in the dataset have high BMI at exam 1?  
+
+<<>>=
+high_bmi1 <- length(na.omit(bmi1[bmi1>25]))
+print(high_bmi1)
+@
+\pagebreak
+\item Out of the 4,415 participants with a BMI measurement at exam 1. What percent had high BMI at exam 1) (an individual has high BMI at exam 1 if his BMI is greater than 25) Express your answer as a proportion of the whole (e.g. 10\% would be .10).
+
+<<>>=
+high_bmi1/length(na.omit(bmi1))
+@
+
+Restricting to the population with BMI measurements at both exam 1 and exam 2, make a scatter plot of BMI at exam 1 (bmi1) versus BMI at exam 2 (bmi2). In general,higher BMI at exam 1 is associated with a  \_\_\_\_\_\_\_\_\_  BMI at exam 2.\\
+\textbf{(a) higher}, (b) lower
+
+<<scatter, echo=TRUE, fig=TRUE, height=6, width=8>>=
+plot(bmi1~bmi2, 
+     main="Body Mass Index at exam 1 Vs. 2",
+     col=c("darkblue","red"))
+@
+
+\end{enumerate}
+\pagebreak
+\textbf{BMI over time.} In this question, we again use data from the NHLBI teaching data set to examine the continuous variable, body mass index (BMI).   Our study population is the subset of participants in the Framingham Heart Study attending the first examination in 1956 with a nonmissing BMI measure (4,415 participants out of 4,434). 
+
+\begin{enumerate}
+  \item What is the mean BMI at exam 1 in the study population?
+
+<<>>=
+mean(bmi1, na.rm=T)
+@
+
+\item The median BMI at exam 1 is 25.45 in the study population.  Comparing the mean and median, do these data suggest that the distribution of BMI at exam 1 is right skewed or left skewed?\\
+\textbf{(a) right skewed},  (b) left skewed
+
+<<>>=
+by(bmi1, sex1, summary)
+@
+
+\item Is the mean BMI at exam 1 higher in males or females?\\
+\textbf{(a) Males},  (b) Females
+
+\item Should you compare the mode for BMI at exam 1 in males versus females?\\
+(a) Yes, \textbf{(b) No}
+<<>>=
+bmi1_by_sex1 <- table(bmi1, sex1) 
+subset(bmi1_by_sex1[,1], bmi1_by_sex1[,1]==max(bmi1_by_sex1[,1])) 
+
+subset(bmi1_by_sex1[,2], bmi1_by_sex1[,2]==max(bmi1_by_sex1[,2]))
+@
+\pagebreak
+\item Is the IQR for BMI at exam 1 larger in males or females?\\
+(a) Males, \textbf{(b) Females}
+
+<<>>=
+IQR(bmi1[sex1=="Female"], na.rm=T) 
+IQR(bmi1[sex1=="Male"], na.rm=T)
+@
+\pagebreak
+\textbf{Now, for the remaining parts of this question, restrict your study population to the subset of participants with BMI measures at exam 1 and exam 2.  }
+
+\item What is the mean change in BMI from exam 1 to exam 2? Change in BMI is defined as BMI at exam 2 minus BMI at exam1. (Note: you need to generate this variable in R).
+
+<<>>=
+bmi_delta_12 <- na.omit(bmi2 - bmi1)
+mean(bmi_delta_12)
+@
+
+\item What is the standard deviation of the change in BMI from exam 1 to exam 2?
+
+<<>>=
+sd(bmi_delta_12)
+@
+
+
+\item What is the range of changes in BMI from exam 1 to exam 2?
+
+<<>>=
+max(bmi_delta_12) - min(bmi_delta_12)
+@
+
+\item Assuming that the empirical rule applies in this situation, we expect that 95\% of individuals will have a change in BMI between exams 1 and 2 that lies within the interval 
+<<>>=
+c(mean(bmi_delta_12)-2*sd(bmi_delta_12), 
+  mean(bmi_delta_12)+2*sd(bmi_delta_12))
+@
+\end{enumerate}
+
+\item Does it appear that the empirical rule can be used in the previous question, examining the change in BMI from exam 1 to exam 2?\\
+\textbf{(a) Yes}, (b) No
+
+\end{document}
