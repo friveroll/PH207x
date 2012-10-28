@@ -39,11 +39,8 @@ library("foreign")
 @
 \item Load and attach the dataset in a dataframe named data.
 <<echo=True, eval=FALSE>>=
-data <- read.dta("C:\\Users\\felipillo\\
-                 Documents\\GitHub\\PH207x
-                 \\Data\\fhs.dta",
-                 convert.factors = TRUE ,
-                 missing.type = TRUE)
+data <- read.dta("https://dl.dropbox.com/u/4828275/fhs.dta"
+                 ,convert.factors = TRUE ,missing.type = TRUE)
 
 attach(data)
 @
@@ -98,7 +95,8 @@ library("gmodels")
 with(data, CrossTable(cursmoke1, 
                       cursmoke2, 
                       missing.include=TRUE, 
-                      format="SPSS"))
+                      format="SPSS",
+                      prop.chisq=FALSE))
 
 @
 

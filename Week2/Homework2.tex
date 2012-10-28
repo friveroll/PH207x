@@ -34,16 +34,14 @@ Obese & \(30 < BMI\) & 574 & 38 \\\hline
 \begin{Sinput}
 > library("foreign") #needed for read.dta function
 > ### Import Data from STATA ###
-> data <- read.dta("C:\\Users\\felipillo\\
-+                  Documents\\GitHub\\PH207x\\
-+                  Data\\fhs.dta",
-+                  convert.factors = TRUE ,
+> data <- read.dta("https://dl.dropbox.com/u/4828275/fhs.dta",
++                  convert.factors = TRUE,
 +                  missing.type = TRUE)
 > attach(data)
 > 
 \end{Sinput}
 \end{Schunk}
-
+\pagebreak
 \begin{Schunk}
 \begin{Sinput}
 > bmi1_cat <- NA
@@ -304,9 +302,11 @@ Age & 1950-1952 & 1990-1992 \\
 \end{center}
 \end{table}
 
+
+
 \begin{Schunk}
 \begin{Sinput}
-> life_table <- read.csv("~/GitHub/PH207x/Data/life_table_hwk2.csv")
+> life_table <- read.csv("https://dl.dropbox.com/u/4828275/life_table_hwk2.csv")
 \end{Sinput}
 \end{Schunk}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.26)  28 OCT 2012 02:33
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.26)  28 OCT 2012 03:33
 entering extended mode
 **Homework2.tex
 (C:\Users\felipillo\Documents\GitHub\PH207x\Week2\Homework2.tex
@@ -304,12 +304,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--34
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 101--102
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
 
  []
 
@@ -328,11 +333,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--109
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 109--111
-
- []
-
 [3]
 
 ! LaTeX Error: There's no line here to end.
@@ -341,14 +341,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.196 
+l.194 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 199--200
+Underfull \hbox (badness 10000) in paragraph at lines 197--198
 
  []
 
@@ -359,14 +359,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.239 
+l.237 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 289--291
+Underfull \hbox (badness 10000) in paragraph at lines 287--289
 
  []
 
@@ -417,7 +417,7 @@ Here is how much of TeX's memory you used:
  9081 multiletter control sequences out of 15000+200000
  27422 words of font info for 59 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 35i,11n,28p,413b,565s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 35i,11n,28p,413b,422s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -434,7 +434,7 @@ fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 /amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmtt8.pfb>
-Output written on Homework2.pdf (8 pages, 206691 bytes).
+Output written on Homework2.pdf (8 pages, 206006 bytes).
 PDF statistics:
  147 PDF objects out of 1000 (max. 8388607)
  32 named destinations out of 1000 (max. 500000)

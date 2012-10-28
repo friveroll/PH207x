@@ -5,7 +5,7 @@ if (!"foreign" %in% installed.packages())
 library("foreign") #needed for read.dta function
 
 ### Import Stata Data ###
-data <- read.dta("Data/fhs.dta",convert.factors = TRUE ,missing.type = TRUE)
+data <- read.dta("https://dl.dropbox.com/u/4828275/fhs.dta",convert.factors = TRUE ,missing.type = TRUE)
 
 attach(data)
 
