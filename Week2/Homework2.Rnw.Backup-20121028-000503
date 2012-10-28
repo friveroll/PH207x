@@ -1,0 +1,110 @@
+%
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+
+\title{Problem Set 2}
+\author{\href{http://feliperiveroll.name}{Felipe Riveroll Aguirre}\footnote{\texttt{friveroll@gmail.com}}} 
+\maketitle
+\section{BMI and CHD prevalence}
+
+The following table uses data from the NHLBI teaching data set and displays categories of body mass index for 4,415 participants in the Framingham Heart Studyattending an examination in 1956 with non-missing values for body mass index. For each body mass index category, the table displays the number of subjects with existing Coronary Heart  Disease (CHD) at that exam (prevchd1=1)\\
+
+\begin{center}
+\begin{tabular}{cccc}\hline
+Category & BMI & Number of  & Cases of CHD \\
+ && subjects & at exam 1\\\hline
+Under Weight & \(BMI < 18.5\) & 57 & 0 \\
+Normal Weight & \(18.5 \leq BMI \geq 25\) & 1936 & 66 \\
+Overweight & \(25 < BMI \geq 30\) & 1848 & 90 \\
+Obese & \(30 < BMI\) & 574 & 38 \\\hline
+&Total & 4415 & 194 \\
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item What is the prevalence of obesity among the 4415 participants at the 1956 exam?
+  \item What is the prevalence of CHD at the 1956 exam among the 4415 participants at the 1956 exam?
+  \item What is the prevalence of CHD at the 1956 exam for each of the body mass index  classes?
+  \begin{enumerate}
+  \item Under Weight Participants
+  \item Normal Weight Participants
+  \item Overweight Participants
+  \item Obese Participants\\
+\end{enumerate}
+
+\end{enumerate}
+
+\textbf{Diabetes prevalence}. Use R and the NHLBI data set to calculate the prevalence of diabetes among participants who attended and had non-missing data on diabetes at all three examinations. \textbf{(Hint: There were 3,206 such participants.)}
+
+\begin{enumerate}
+  \item What is the prevalence of diabetes at the first exam \textbf{(diabetes1=1)}?
+  \item What is the prevalence of diabetes at the second exam \textbf{(diabetes2=1)}?
+  \item What is the prevalence of diabetes at the third exam \textbf{(diabetes3=1)}?
+\end{enumerate}\\
+
+\textbf{BMI and hypertension prevalence.} Use Stata and the BMI1 variable in the NHLBI data set to create the four categories of body mass index as defined in the first question.\\ 
+
+\begin{enumerate}
+  \item What is the prevalence of hypertension \textbf{(prevhyp1=1)} at the 1956 exam for each of the body mass index classes?
+\begin{enumerate}
+  \item Under Weight Participants
+  \item Normal Weight Participants
+  \item Overweight Participants
+  \item Obese Participants
+\end{enumerate}
+\end{enumerate}\\
+
+\textbf{Hypertension and high blood pressure.} Use R to create a binary variable (highbp1) to represent the presence/absence of high blood pressure at the 1956 examination\\
+
+<<>>=
+highbp1 <- NA
+highbp1[sysbp1>=140 | diabp1 >= 90] <- 1 
+highbp1[sysbp1<140 & diabp1 < 90] <- 0
+@
+
+\textbf{(Note: There are no missing data on sysbp1 and diabp1. If data were missing on both sysbp1 and diabp1 then they should also be missing for highbp1. If data were missing on diabp1 only and sysbp1 > 140 then highbp1 =1, otherwise highbp1 should be missing.  Similarly, if data were missing on sysbp1 only and diabp1 > 90 then highbp1 =1, otherwise highbp1 should be missing.)}
+
+\begin{enumerate}
+  \item What is the prevalence of CHD (prevchd1=1) at the 1956 exam for participants with high blood pressure at the 1956 exam (highbp1=1)?
+  \item What is the prevalence of CHD (prevchd1=1) at the 1956 exam for participants without high blood pressure at the 1956 exam (highbp1=0)?
+
+\end{enumerate}
+
+
+\section{HYPOTHETICAL LIFE TABLE}
+
+The table below lists the number of individuals at age "x" for a hypothetical
+population in 1950-1952 and 1990 - 1992\\
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{ccc}
+  \hline
+Age & 1950-1952 & 1990-1992 \\ 
+  \hline
+0  & 100000 & 100000 \\ 
+20 & 73412 & 96902 \\ 
+40 & 56884 & 92638 \\ 
+70 & 31744 & 79873 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{enumerate}
+  \item What is the probability of surviving from birth to age 20 in 1950-1952?
+  \item What is the probability of surviving from age 40 to age 70 in 1990-1992?
+  \item Define the absolute survival increase over the 40 year span as p1−p2, where p1 is the chance of surviving from age x to age x+n in 1990-1992 and p2 is the chance of  surviving from age x to age x+n in 1950-1952. Which age group has the greatest absolute survival increase?\\
+(a) 0 – 20 , (b) 20 – 40, (c) 40 – 70\\
+   \item Define the relative survival increase over the 40 year span as (p1−p2)/p2, where p1 is the chance of surviving from age x to age x+n in 1990-1992 and p2 is the chance of surviving from age x to age x+n in 1950-1952. Which age group has the greatest relative survival increase?\\
+(a) 0 – 20 , (b) 20 – 40, (c) 40 – 70\\
+\end{enumerate}
+
+\end{document}
+
+
+

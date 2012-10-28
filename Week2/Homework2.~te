@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\usepackage{Sweave}
+\begin{document}
+\input{Homework2-concordance}
+
+\section{HYPOTHETICAL LIFE TABLE}
+
+The table below lists the number of individuals at age "x" for a hypothetical
+population in 1950-1952 and 1990 - 1992\\
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrr}
+  \hline
+Age & 1950-1952 & 1990-1992 \\ 
+  \hline
+0  & 100000 & 100000 \\ 
+20 & 73412 & 96902 \\ 
+40 & 56884 & 92638 \\ 
+70 & 31744 & 79873 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\end{document}

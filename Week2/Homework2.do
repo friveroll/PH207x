@@ -53,5 +53,15 @@ tab highbp1 prevchd1 , cell column row
 
 insheet using "C:\Users\felipillo\Documents\GitHub\PH207x\Data\life_table_hwk2.csv", clear
 
+rename v3 v1
 
+gen v2_ndx = v2[_n-1] - v2
+gen v2_nqx = v2_ndx[_n+1]/v2
+gen v2_npx = 1 - v2_nqx
 
+gen v1_ndx = v1[_n-1] - v1
+gen v1_nqx = v1_ndx[_n+1]/v1
+gen v1_npx = 1 - v1_nqx
+
+gen abs_surv_inc = v1_npx - v2_npx
+gen rel_surv_inc = abs_surv_inc / v2_npx

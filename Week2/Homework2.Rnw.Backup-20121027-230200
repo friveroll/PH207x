@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\title{Problem Set 2}
+\author{Felipe Riveroll Aguirre\footnote{\texttt{friveroll@gmail.com}}} 
+\maketitle
+
+\section{BMI and CHD prevalence}
+
+The following table uses data from the NHLBI teaching data set and displays categories of body mass index for 4,415 participants in the Framingham Heart Studyattending an examination in 1956 with non-missing values for body mass index. For each body mass index category, the table displays the number of subjects with existing Coronary Heart  Disease (CHD) at that exam (prevchd1=1)
+
+
+
+\section{HYPOTHETICAL LIFE TABLE}
+
+The table below lists the number of individuals at age "x" for a hypothetical
+population in 1950-1952 and 1990 - 1992\\
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrr}
+  \hline
+Age & 1950-1952 & 1990-1992 \\ 
+  \hline
+0  & 100000 & 100000 \\ 
+20 & 73412 & 96902 \\ 
+40 & 56884 & 92638 \\ 
+70 & 31744 & 79873 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\end{document}
