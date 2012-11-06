@@ -1,0 +1,56 @@
+%
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage[english]{babel}
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+
+\title{Problem Set 3}
+\author{\href{http://feliperiveroll.name}{Felipe Riveroll Aguirre}\footnote{\texttt{friveroll@gmail.com}}} 
+\maketitle
+
+Probability and BMI. The following table uses data from the NHLBI teaching data set and displays the 
+body mass index for 3,909 participants in the Framingham Heart Study with BMI measurements at the 
+first two exams, in 1956 and in 1962.  
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{cccc}
+                      & BMI \leq 25,   & BMI > 25, & Total \\
+                      & exam 2         & exam 2    &  \\
+\hline
+BMI \leq 25, exam 1   & 1,492          & 278       & 1,770 \\
+BMI > 25,    exam 1   & 249            & 1,890     & 2,139 \\
+\hline
+Total                 & 1,741          & 2,168     & 3,909 \\
+\end{tabular}
+\end{center}
+\end{table}
+
+
+BMI and Cumulative Incidence. The following table uses data from the NHLBI teaching data set and 
+displays categories of body mass index (used in the previous homework assignment) for 4,415 
+participants in the Framingham Heart Study attending an examination in 1956 with non-missing values 
+for body mass index. For each body mass index category, the table displays the number of subjects 
+who died (death=1) during follow-up and the total person-years of follow-up (timedeath) until death or 
+the end of the follow-up period (24 years). Assume that all deaths and time of death were recorded 
+among the 4415 participants.
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{cccc}
+BMI & Number of & Number of  & Total Person-years \\
+    & Subjects  & Deaths \\
+\hline
+BMI \lt 18.5        & 57 & 18 & 1181.44 \\
+18.5 \le BMI \lt 25 & 1936 & 571 & 40708.74 \\
+25 \le BMI \lt 30   & 1848 & 691 & 37728.41 \\
+30 \le BMI          & 574 & 257 & 11254.52 \\
+\hline
+Total               & 4415 & 1537 & 90873.11
+\end{tabular}
+\end{center}
+\end{table}
+
+\end{document}

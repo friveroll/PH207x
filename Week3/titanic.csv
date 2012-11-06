@@ -1,0 +1,19 @@
+"Passenger Class", "Age/Sex", "Survival Status", "Frequency"
+"First","Child","Survived",6
+"First","Child","Did not survive",0
+"First","Women","Survived",140
+"First","Women","Did not survive",4
+"First","Man","Survived",57
+"First","Man","Did not survive",118
+"Second","Child","Survived",24
+"Second","Child","Did not survive",0
+"Second","Women","Survived",80
+"Second","Women","Did not survive",13
+"Second","Man","Survived",14
+"Second","Man","Did not survive",154
+"Third","Child","Survived",27
+"Third","Child","Did not survive",52
+"Third","Women","Survived",76
+"Third","Women","Did not survive",89
+"Third","Man","Survived",75
+"Third","Man","Did not survive",387

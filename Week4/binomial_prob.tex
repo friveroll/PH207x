@@ -1,0 +1,44 @@
+%&latex
+\documentclass{article}
+
+\usepackage[english]{babel}
+\begin{document}
+
+%+Title
+\title{Binomial Probability R and STATA Commands}
+\author{Felipe Riveroll Aguirre}
+\date{\today}
+\maketitle
+%-Title
+
+\begin{enumerate}
+\item 
+\(P(X\leq k)=P(k=0)+...+P(X=k)\)\\
+\textit{STATA: }\texttt{binomial(n,k,p)}\\
+\textit{R:} \texttt{pbinom(q, size, prob, lower.tail = TRUE)}
+
+\item
+
+\(P(X>k) = 1 - P(X\leq k)\)\\
+\textit{STATA: }\texttt{1- binomial(n, k, p)} or \texttt{binomialtail(n,k+1,p)}\\
+\textit{R: }\texttt{pbinom(q, size, prob, lower.tail = FALSE)}
+
+\item 
+\(P(X<k) = P(X\leq (k-1))\)\\
+\textit{STATA:} \texttt{binomial(n, k-1, p)} or \texttt{1 - binomialtail(n, k, p)}\\
+\textit{R:} \texttt{pbinom(q-1, size, prob, lower.tail = TRUE)}
+
+\item
+\(P (X\geq k) = P(X>(k-1))=1-P(X<k)\)\\
+\textit{STATA:} \texttt{binomialtail(n,k, p)}\\
+\textit{R: }\texttt{pbinom(q-1, size, prob, lower.tail = FALSE\\ }
+
+\end{enumerate}
+
+
+\begin{center}\fbox{In R \(k\) refers to the \(q\) argument in \texttt{pbinom}}\end{center}
+
+
+\end{document}
+
+
