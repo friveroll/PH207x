@@ -417,7 +417,7 @@ if (!"epiR" %in% installed.packages())
 }
 library(epiR)
 @
-We can get all the required tables for Incidence rate using a loop (see next question to see a single table and some comments for the code, also you can get \href{here}{} the R script)
+We can get all the required tables for Incidence rate using a loop (see next question to see a single table and some comments for the code, also you can get \href{https://github.com/friveroll/PH207x/blob/master/Week3/Homework3.R}{here} the R script)
 
 <<>>=
 bmi_cat <- c("underwt", "normalwt", "overwt", "obese")
