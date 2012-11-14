@@ -1,0 +1,4 @@
+"Class", "Blood Pressure Category" , "Number of Subjects at 1956 Exam", "Prevalent Cases of CHD", "Number Developing CHD During Follow-up", "Total Years of Followup"
+"I", "SBP< 140 and DBP <90", 2815, 88, 547, 55384.42
+"II", "140 < SBP < 160 or 90 < DBP < 95", 781, 39, 214, 13191.79
+"III", "SBP > 160 or DBP >95", 838, 67, 285, 12348.94

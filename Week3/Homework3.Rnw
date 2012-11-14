@@ -111,12 +111,7 @@ exam 1  & No& Yes   \\
 \end{center}
 \end{table}
 
-<<eval=FALSE>>=
-age_smoking <- read.csv("https://dl.dropbox.com/u/4828275/age_smoking.csv")
-@
-<<echo=FALSE>>=
-age_smoking <- read.csv("~/Documents/GitHub/PH207x/Week3/age_smoking.csv")
-@
+
 
 \begin{enumerate}
 \item 
